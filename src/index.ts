@@ -13,7 +13,7 @@ import { sendResponse } from './helpers/common';
 dotenv.config();
 
 const hostname = 'localhost';
-const port = process.env.PORT as unknown as number;
+const port = process.env.PORT as unknown as number || 4000;
 
 const server = http.createServer((req, res) => {
   const parsedUrl = req.url ? url.parse(req.url, true) : null;

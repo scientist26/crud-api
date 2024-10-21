@@ -5,7 +5,7 @@ This is a simple CRUD API application built with Node.js.
 ## How to Run the Application
 
 1. **Clone the repository:**
-   git clone https://github.com/yourusername/crud-api.git
+   git clone https://github.com/scientist26/crud-api
    cd crud-api
 
 2. **Install dependencies:**
@@ -22,7 +22,7 @@ This is a simple CRUD API application built with Node.js.
 
 ## Available Scripts
 
-- `npm start`: Starts the application.
+- `npm run start:dev`: Starts the application in dev mode.
 
 ## Endpoints
 
