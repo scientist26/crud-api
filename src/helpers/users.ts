@@ -42,3 +42,15 @@ export const createUser = async ({ username, age, hobbies }: { username: string;
   await writeUsersToDatabase(existingUsers);
   return newUser;
 };
+
+export const updateUser = async ({ id, username, age, hobbies }: IUser): Promise<IUser | null> => {
+  const users: IUser[] = await getUsersFromLocalDatabase();
+  const userIndex = users.findIndex(user => user.id === id);
+
+  if (userIndex !== -1) {
+    users[userIndex] = { ...users[userIndex], username, age, hobbies };
+    await writeUsersToDatabase(users);
+    return users[userIndex];
+  }
+  return null;
+};

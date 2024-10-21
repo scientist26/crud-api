@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 import * as url from 'url';
 import { handleGetRequest } from './requestHandlers/handleGetRequest';
 import { handlePostRequest } from './requestHandlers/handlePostRequests';
+import { handlePutRequest } from './requestHandlers/handlePutRequests';
 
 dotenv.config();
 
@@ -17,6 +18,8 @@ const server = http.createServer((req, res) => {
       handleGetRequest(req, res, parsedUrl);
     } else if (req.method === 'POST') {
       handlePostRequest(req, res, parsedUrl);
+    } else if (req.method === 'PUT') {
+      handlePutRequest(req, res, parsedUrl);
     }
   } else {
     // TODO handle errors

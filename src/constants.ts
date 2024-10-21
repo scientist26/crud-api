@@ -11,4 +11,12 @@ export enum ENDPOINTS {
   USER = '/user',
 }
 
+export enum ERROR_MESSAGES {
+  USER_NOT_FOUND = 'User not found',
+  USER_ID_INVALID = 'User id is invalid',
+  ENDPOINT_NOT_FOUND = 'Endpoint not found',
+  INVALID_REQUEST_PAYLOAD = 'Invalid request payload',
+  INVALID_JSON_DATA = 'Invalid JSON data',
+}
+
 export const CONTENT_TYPE_JSON = 'application/json';
