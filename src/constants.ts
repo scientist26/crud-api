@@ -7,8 +7,8 @@ export enum HTTP_STATUS_CODES {
 }
 
 export enum ENDPOINTS {
-  ALL_USER = '/users',
-  USER_BY_ID = '/user',
+  USERS = '/users',
+  USER = '/user',
 }
 
 export const CONTENT_TYPE_JSON = 'application/json';
