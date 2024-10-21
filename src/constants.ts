@@ -9,7 +9,7 @@ export enum HTTP_STATUS_CODES {
 
 export enum ENDPOINTS {
   USERS = '/users',
-  USER = '/user',
+  USER = 'user',
 }
 
 export enum ERROR_MESSAGES {
@@ -18,6 +18,7 @@ export enum ERROR_MESSAGES {
   ENDPOINT_NOT_FOUND = 'Endpoint not found',
   INVALID_REQUEST_PAYLOAD = 'Invalid request payload',
   INVALID_JSON_DATA = 'Invalid JSON data',
+  SERVER_ERROR = 'Internal Server Error',
 }
 
 export const CONTENT_TYPE_JSON = 'application/json';
