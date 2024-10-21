@@ -4,15 +4,16 @@ import * as url from 'url';
 import { handleGetRequest } from './requestHandlers/handleGetRequest';
 import { handlePostRequest } from './requestHandlers/handlePostRequests';
 import { handlePutRequest } from './requestHandlers/handlePutRequests';
+import { handleDeleteRequest } from './requestHandlers/handleDeleteRequest';
 
 dotenv.config();
 
-// const hostname = '127.0.0.1'
 const hostname = 'localhost';
 const port = process.env.PORT as unknown as number;
 
 const server = http.createServer((req, res) => {
   const parsedUrl = req.url ? url.parse(req.url, true) : null;
+
   if (parsedUrl) {
     if (req.method === 'GET') {
       handleGetRequest(req, res, parsedUrl);
@@ -20,6 +21,8 @@ const server = http.createServer((req, res) => {
       handlePostRequest(req, res, parsedUrl);
     } else if (req.method === 'PUT') {
       handlePutRequest(req, res, parsedUrl);
+    } else if (req.method === 'DELETE') {
+      handleDeleteRequest(req, res, parsedUrl);
     }
   } else {
     // TODO handle errors

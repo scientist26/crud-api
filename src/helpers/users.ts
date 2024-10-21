@@ -54,3 +54,15 @@ export const updateUser = async ({ id, username, age, hobbies }: IUser): Promise
   }
   return null;
 };
+
+export const deleteUser = async (userId: string): Promise<boolean> => {
+  const users: IUser[] = await getUsersFromLocalDatabase();
+  const userIndex = users.findIndex(user => user.id === userId);
+
+  if (userIndex !== -1) {
+    users.splice(userIndex, 1);
+    await writeUsersToDatabase(users);
+    return true;
+  }
+  return false;
+};

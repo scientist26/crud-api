@@ -11,11 +11,10 @@ export const handleGetRequest = async (req: IncomingMessage, res: ServerResponse
     // TODO refactor: move upper or to middleware
     return sendResponse(res, HTTP_STATUS_CODES.BAD_REQUEST, CONTENT_TYPE_JSON, { error: 'Invalid request' });
   }
-
   if (parsedUrl.path === ENDPOINTS.USERS) {
     const users = await getUsersFromLocalDatabase();
     sendResponse(res, HTTP_STATUS_CODES.OK, CONTENT_TYPE_JSON, users);
-  } else if (parsedUrl.path.startsWith(ENDPOINTS.USERS)) {
+  } else if (parsedUrl.path.split('/').includes(ENDPOINTS.USER)) {
     const userId = parsedUrl.query.id || parsedUrl.path.split('/').pop();
     const users = await getUsersFromLocalDatabase();
     const user = users.find((u: { id: string }) => u.id === userId);
