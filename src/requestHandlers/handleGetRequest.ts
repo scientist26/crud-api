@@ -2,13 +2,13 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { UrlWithParsedQuery } from 'url';
 import { validate as uuidValidate } from 'uuid';
 
-import { CONTENT_TYPE_JSON, ENDPOINTS, HTTP_STATUS_CODES } from '../constants';
+import { CONTENT_TYPE_JSON, ENDPOINTS, ERROR_MESSAGES, HTTP_STATUS_CODES } from '../constants';
 import { getUsersFromLocalDatabase } from '../helpers/users';
 import { sendResponse } from '../helpers/common';
 
 export const handleGetRequest = async (req: IncomingMessage, res: ServerResponse, parsedUrl: UrlWithParsedQuery) => {
   if (!parsedUrl.path) {
-    // TODO check
+    // TODO refactor: move upper or to middleware
     return sendResponse(res, HTTP_STATUS_CODES.BAD_REQUEST, CONTENT_TYPE_JSON, { error: 'Invalid request' });
   }
 
@@ -26,12 +26,12 @@ export const handleGetRequest = async (req: IncomingMessage, res: ServerResponse
       const isUserIdValid = uuidValidate(String(userId));
 
       if (isUserIdValid) {
-        sendResponse(res, HTTP_STATUS_CODES.NOT_FOUND, CONTENT_TYPE_JSON, { error: 'User not found' });
+        sendResponse(res, HTTP_STATUS_CODES.NOT_FOUND, CONTENT_TYPE_JSON, { error: ERROR_MESSAGES.USER_NOT_FOUND });
       } else {
-        sendResponse(res, HTTP_STATUS_CODES.BAD_REQUEST, CONTENT_TYPE_JSON, { error: 'User id is invalid' });
+        sendResponse(res, HTTP_STATUS_CODES.BAD_REQUEST, CONTENT_TYPE_JSON, { error: ERROR_MESSAGES.USER_ID_INVALID });
       }
     }
   } else {
-    sendResponse(res, HTTP_STATUS_CODES.NOT_FOUND, CONTENT_TYPE_JSON, { error: 'Endpoint not found' });
+    sendResponse(res, HTTP_STATUS_CODES.NOT_FOUND, CONTENT_TYPE_JSON, { error: ERROR_MESSAGES.ENDPOINT_NOT_FOUND });
   }
 };
