@@ -8,7 +8,7 @@ export enum HTTP_STATUS_CODES {
 }
 
 export enum ENDPOINTS {
-  USERS = '/users',
+  USERS = 'users',
   USER = 'user',
 }
 

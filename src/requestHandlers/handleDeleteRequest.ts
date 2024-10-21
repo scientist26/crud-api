@@ -13,30 +13,31 @@ export const handleDeleteRequest = async (req: IncomingMessage, res: ServerRespo
     return sendResponse(res, HTTP_STATUS_CODES.BAD_REQUEST, CONTENT_TYPE_JSON, { error: 'Invalid request' });
   }
 
-  if (parsedUrl.path.startsWith(ENDPOINTS.USERS)) {
+  if (parsedUrl.path.split('/').includes(ENDPOINTS.USERS)) {
     const userId = parsedUrl.query.id || parsedUrl.path.split('/').pop();
-    const users = await getUsersFromLocalDatabase();
-    const user: IUser | undefined = users.find((u: { id: string }) => u.id === userId);
 
-    if (user) {
-      const userId = parsedUrl.query.id || parsedUrl.path.split('/').pop();
+    const isUserIdValid = uuidValidate(String(userId));
+
+    if (isUserIdValid) {
       const users = await getUsersFromLocalDatabase();
-      const user = users.find((u: { id: string }) => u.id === userId);
+      const user: IUser | undefined = users.find((u: { id: string }) => u.id === userId);
 
       if (user) {
-        if (typeof userId === 'string') {
-          await deleteUser(userId);
-        }
-        sendResponse(res, HTTP_STATUS_CODES.NO_CONTENT, CONTENT_TYPE_JSON);
-      } else {
-        const isUserIdValid = uuidValidate(String(userId));
+        const userId = parsedUrl.query.id || parsedUrl.path.split('/').pop();
+        const users = await getUsersFromLocalDatabase();
+        const user = users.find((u: { id: string }) => u.id === userId);
 
-        if (isUserIdValid) {
-          sendResponse(res, HTTP_STATUS_CODES.NOT_FOUND, CONTENT_TYPE_JSON, { error: ERROR_MESSAGES.USER_NOT_FOUND });
-        } else {
-          sendResponse(res, HTTP_STATUS_CODES.BAD_REQUEST, CONTENT_TYPE_JSON, { error: ERROR_MESSAGES.USER_ID_INVALID });
+        if (user) {
+          if (typeof userId === 'string') {
+            await deleteUser(userId);
+          }
+          sendResponse(res, HTTP_STATUS_CODES.NO_CONTENT, CONTENT_TYPE_JSON);
         }
+      } else {
+        sendResponse(res, HTTP_STATUS_CODES.NOT_FOUND, CONTENT_TYPE_JSON, { error: ERROR_MESSAGES.USER_NOT_FOUND });
       }
+    } else {
+      sendResponse(res, HTTP_STATUS_CODES.BAD_REQUEST, CONTENT_TYPE_JSON, { error: ERROR_MESSAGES.USER_ID_INVALID });
     }
   } else {
     sendResponse(res, HTTP_STATUS_CODES.NOT_FOUND, CONTENT_TYPE_JSON, { error: ERROR_MESSAGES.ENDPOINT_NOT_FOUND });

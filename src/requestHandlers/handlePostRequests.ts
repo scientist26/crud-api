@@ -11,7 +11,7 @@ export const handlePostRequest = async (req: IncomingMessage, res: ServerRespons
     return sendResponse(res, HTTP_STATUS_CODES.BAD_REQUEST, CONTENT_TYPE_JSON, { error: 'Invalid request' });
   }
 
-  if (parsedUrl.path === ENDPOINTS.USERS) {
+  if (parsedUrl.path === `/${ENDPOINTS.USERS}`) {
     let body = '';
     req.on('data', chunk => {
       body += chunk.toString();
